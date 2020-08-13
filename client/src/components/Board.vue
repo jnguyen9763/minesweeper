@@ -7,6 +7,7 @@
         :cell="cell"
         :flagTile="flagTile"
         :revealTile="revealTile"
+        :gameLost="gameLost"
       />
     </div>
   </div>
@@ -27,11 +28,14 @@
         flagged: [],
         flags: 0,
         moves: 0,
+        gameLost: false,
+        gameWon: false,
       };
     },
     props: ["width", "height", "mines"],
     methods: {
       flagTile: function (x, y) {
+        if (this.gameLost || this.gameWon) return;
         const flagChange = !this.board[x][y].flagged;
         this.board[x][y].flagged = flagChange;
         if (flagChange) {
@@ -45,6 +49,7 @@
         if (this.flags === this.mines) this.checkWin();
       },
       revealTile: function (x, y) {
+        if (this.gameLost || this.gameWon) return;
         if (this.board[x][y].type === TileTypes.EMPTY) {
           this.clearSurroundingEmptyTiles(x, y);
         }
@@ -66,6 +71,7 @@
         }
       },
       checkWin: function () {
+        this.gameWon = true;
         const hasWon = this.flagged.reduce((acc, type) => {
           if (!acc || type !== TileTypes.BOMB) return false;
           return true;
@@ -77,6 +83,7 @@
         // enter high score
       },
       gameOver: function () {
+        this.gameLost = true;
         setTimeout(() => alert("You lost!"), 100);
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {

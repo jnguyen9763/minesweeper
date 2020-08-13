@@ -1,6 +1,6 @@
 <template>
   <div class="cell default" @click="onLeftClickHandler" @contextmenu.prevent="onRightClickHandler">
-    <div v-if="isFlagged" class="flagged">🚩</div>
+    <div v-if="(!gameLost && isFlagged) || (gameLost && isFlagged && !isBomb)" class="flagged">🚩</div>
     <div v-if="isRevealed" class="revealed cover">
       <div v-if="isBomb || isLosingBomb" :class="{'losing-bomb': isLosingBomb}">💣</div>
       <div v-else-if="!isEmpty" class="text">{{cell.type}}</div>
@@ -13,7 +13,7 @@
 
   export default {
     name: "Tile",
-    props: ["cell", "flagTile", "revealTile"],
+    props: ["cell", "flagTile", "revealTile", "gameLost"],
     data() {
       return {
         isBomb: this.cell.type === TileTypes.BOMB,
