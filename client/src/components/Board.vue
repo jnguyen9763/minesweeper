@@ -3,7 +3,7 @@
     <div v-for="(row, rIndex) in board" :key="`r${rIndex}`">
       <Tile
         v-for="(cell, cIndex) in row"
-        :key="`r${rIndex}c${cIndex}${moves}`"
+        :key="`r${rIndex}c${cIndex}${flags}${moves}`"
         :cell="cell"
         :flagTile="flagTile"
         :revealTile="revealTile"
@@ -35,11 +35,24 @@
         this.board[x][y].flagged = flagChange;
         if (flagChange) this.flags++;
         else this.flags--;
-        this.moves++;
       },
       revealTile: function (x, y) {
+        if (this.board[x][y].type === TileTypes.EMPTY) {
+          this.clearSurroundingEmptyTiles(x, y);
+        }
         this.board[x][y].revealed = true;
         this.moves++;
+        // if (this.board[x][y].type === TileTypes.BOMB) alert("Game over");
+      },
+      clearSurroundingEmptyTiles: function (x, y) {
+        this.board[x][y].revealed = true;
+        const neighbors = this.findNeighbors(this.board, x, y);
+        for (let cell of neighbors) {
+          if (cell.revealed) continue;
+          if (cell.type === TileTypes.EMPTY)
+            this.clearSurroundingEmptyTiles(cell.x, cell.y);
+          else this.board[cell.x][cell.y].revealed = true;
+        }
       },
       createBoard: function () {
         const board = this.createEmptyBoard();
@@ -109,6 +122,11 @@
         if (!isRightEdge && !isBottomEdge) neighbors.push(board[x + 1][y + 1]);
 
         return neighbors;
+      },
+    },
+    watch: {
+      moves: function () {
+        console.log(this.moves);
       },
     },
   };
