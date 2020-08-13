@@ -48,9 +48,12 @@
         if (this.board[x][y].type === TileTypes.EMPTY) {
           this.clearSurroundingEmptyTiles(x, y);
         }
+        if (this.board[x][y].type === TileTypes.BOMB) {
+          this.gameOver();
+          this.board[x][y].type = TileTypes.LOSING_BOMB;
+        }
         this.board[x][y].revealed = true;
         this.moves++;
-        // if (this.board[x][y].type === TileTypes.BOMB) alert("Game over");
       },
       clearSurroundingEmptyTiles: function (x, y) {
         this.board[x][y].revealed = true;
@@ -67,7 +70,21 @@
           if (!acc || type !== TileTypes.BOMB) return false;
           return true;
         }, true);
-        if (hasWon) setTimeout(() => alert("You won!"), 100);
+        if (hasWon) this.winGame();
+      },
+      winGame: function () {
+        setTimeout(() => alert("You won!"), 100);
+        // enter high score
+      },
+      gameOver: function () {
+        setTimeout(() => alert("You lost!"), 100);
+        for (let i = 0; i < this.height; i++) {
+          for (let j = 0; j < this.width; j++) {
+            if (this.board[i][j].type !== TileTypes.BOMB) continue;
+            this.board[i][j].revealed = true;
+          }
+        }
+        // show high score screen
       },
       createBoard: function () {
         const board = this.createEmptyBoard();

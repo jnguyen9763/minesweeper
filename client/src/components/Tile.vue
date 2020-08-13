@@ -2,7 +2,7 @@
   <div class="cell default" @click="onLeftClickHandler" @contextmenu.prevent="onRightClickHandler">
     <div v-if="isFlagged" class="flagged">🚩</div>
     <div v-if="isRevealed" class="revealed cover">
-      <div v-if="isBomb">💣</div>
+      <div v-if="isBomb || isLosingBomb" :class="{'losing-bomb': isLosingBomb}">💣</div>
       <div v-else-if="!isEmpty" class="text">{{cell.type}}</div>
     </div>
   </div>
@@ -17,6 +17,7 @@
     data() {
       return {
         isBomb: this.cell.type === TileTypes.BOMB,
+        isLosingBomb: this.cell.type === TileTypes.LOSING_BOMB,
         isEmpty: this.cell.type === TileTypes.EMPTY,
         isFlagged: this.cell.flagged,
         isRevealed: this.cell.revealed,
@@ -63,6 +64,10 @@
     background: url("../assets/images/revealed-cell.svg");
     background-size: contain;
     border: #a6acaf 1px solid;
+  }
+
+  .losing-bomb {
+    background-color: #fd0000;
   }
 
   .cover {
