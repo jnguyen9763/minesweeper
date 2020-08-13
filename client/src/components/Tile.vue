@@ -3,13 +3,14 @@
     <div v-if="(!gameLost && isFlagged) || (gameLost && isFlagged && !isBomb)" class="flagged">🚩</div>
     <div v-if="isRevealed" class="revealed cover">
       <div v-if="isBomb || isLosingBomb" :class="{'losing-bomb': isLosingBomb}">💣</div>
-      <div v-else-if="!isEmpty" class="text">{{cell.type}}</div>
+      <div v-else-if="!isEmpty" class="text" :style="{color: textColor}">{{cell.type}}</div>
     </div>
   </div>
 </template>
 
 <script>
   import TileTypes from "../assets/utils/TileTypes.js";
+  import TileColors from "../assets/utils/TileColors.js";
 
   export default {
     name: "Tile",
@@ -21,6 +22,10 @@
         isEmpty: this.cell.type === TileTypes.EMPTY,
         isFlagged: this.cell.flagged,
         isRevealed: this.cell.revealed,
+        textColor:
+          this.cell.type !== TileTypes.BOMB && this.cell.type !== TileTypes.EMPTY
+            ? TileColors[this.cell.type]
+            : "",
       };
     },
     methods: {
