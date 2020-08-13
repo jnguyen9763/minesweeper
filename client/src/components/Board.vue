@@ -28,11 +28,12 @@
     data() {
       return {
         board: this.createBoard(),
-        flagged: [],
         flags: 0,
         moves: 0,
         gameLost: false,
         gameWon: false,
+        revealedTiles: 0,
+        totalTiles: this.width * this.height,
       };
     },
     props: [
@@ -48,44 +49,53 @@
         if (this.gameLost || this.gameWon) return;
         const flagChange = !this.board[x][y].flagged;
         this.board[x][y].flagged = flagChange;
-        if (flagChange) {
-          this.flagged.push(this.board[x][y].type);
-          this.flags++;
-        } else {
-          const index = this.flagged.indexOf(this.board[x][y].type);
-          this.flagged.splice(index, 1);
-          this.flags--;
-        }
-        if (this.flags === this.mines) this.checkWin();
+        if (flagChange) this.flags++;
+        else this.flags--;
+        if (this.flags === this.mines) this.checkWin(true);
       },
       revealTile: function (x, y) {
         if (this.gameLost || this.gameWon) return;
         if (this.board[x][y].type === TileTypes.EMPTY) {
           this.clearSurroundingEmptyTiles(x, y);
+        } else {
+          if (this.board[x][y].type === TileTypes.BOMB) {
+            this.gameOver();
+            this.board[x][y].type = TileTypes.LOSING_BOMB;
+          }
+          this.board[x][y].revealed = true;
+          this.revealedTiles++;
         }
-        if (this.board[x][y].type === TileTypes.BOMB) {
-          this.gameOver();
-          this.board[x][y].type = TileTypes.LOSING_BOMB;
-        }
-        this.board[x][y].revealed = true;
         this.moves++;
+        if (this.totalTiles - this.revealedTiles === this.mines) this.checkWin();
       },
       clearSurroundingEmptyTiles: function (x, y) {
         this.board[x][y].revealed = true;
+        this.revealedTiles++;
         const neighbors = this.findNeighbors(this.board, x, y);
         for (let cell of neighbors) {
           if (cell.revealed) continue;
           if (cell.type === TileTypes.EMPTY)
             this.clearSurroundingEmptyTiles(cell.x, cell.y);
-          else this.board[cell.x][cell.y].revealed = true;
+          else {
+            this.board[cell.x][cell.y].revealed = true;
+            this.revealedTiles++;
+          }
         }
       },
-      checkWin: function () {
-        const hasWon = this.flagged.reduce((acc, type) => {
-          if (!acc || type !== TileTypes.BOMB) return false;
-          return true;
-        }, true);
-        if (hasWon) this.winGame();
+      checkWin: function (flagged = false) {
+        let unrevealedBombs = this.mines;
+        for (let i = 0; i < this.height; i++) {
+          for (let j = 0; j < this.width; j++) {
+            if (
+              this.board[i][j].type === TileTypes.BOMB &&
+              !this.board[i][j].revealed &&
+              (!flagged || (flagged && this.board[i][j].flagged))
+            ) {
+              unrevealedBombs--;
+            }
+          }
+        }
+        if (!unrevealedBombs) this.winGame();
       },
       winGame: function () {
         this.gameWon = true;
@@ -180,8 +190,8 @@
       },
     },
     watch: {
-      flagged: function () {
-        console.log(this.flagged);
+      revealedTiles: function () {
+        console.log(this.revealedTiles);
       },
     },
   };

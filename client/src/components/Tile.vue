@@ -30,7 +30,7 @@
     },
     methods: {
       onLeftClickHandler: function () {
-        if (this.isFlagged) return;
+        if (this.isFlagged || this.isRevealed) return;
         this.revealTile(this.cell.x, this.cell.y);
         return;
       },
