@@ -8,12 +8,15 @@
         :flagTile="flagTile"
         :revealTile="revealTile"
         :gameLost="gameLost"
+        @mousedown="onMouseDownHandler"
+        @mouseup="onMouseUpHandler"
       />
     </div>
   </div>
 </template>
 
 <script>
+  import GameStates from "../assets/utils/GameStates.js";
   import TileTypes from "../assets/utils/TileTypes.js";
   import Tile from "./Tile.vue";
 
@@ -32,7 +35,14 @@
         gameWon: false,
       };
     },
-    props: ["width", "height", "mines"],
+    props: [
+      "width",
+      "height",
+      "mines",
+      "setGameState",
+      "onMouseDownHandler",
+      "onMouseUpHandler",
+    ],
     methods: {
       flagTile: function (x, y) {
         if (this.gameLost || this.gameWon) return;
@@ -71,7 +81,6 @@
         }
       },
       checkWin: function () {
-        this.gameWon = true;
         const hasWon = this.flagged.reduce((acc, type) => {
           if (!acc || type !== TileTypes.BOMB) return false;
           return true;
@@ -79,12 +88,19 @@
         if (hasWon) this.winGame();
       },
       winGame: function () {
-        setTimeout(() => alert("You won!"), 100);
+        this.gameWon = true;
+        this.setGameState(GameStates.GAME_WON);
+        setTimeout(() => {
+          alert("You won!");
+        }, 100);
         // enter high score
       },
       gameOver: function () {
         this.gameLost = true;
-        setTimeout(() => alert("You lost!"), 100);
+        this.setGameState(GameStates.GAME_LOST);
+        setTimeout(() => {
+          alert("You lost!");
+        }, 100);
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {
             if (this.board[i][j].type !== TileTypes.BOMB) continue;

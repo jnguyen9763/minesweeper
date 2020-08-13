@@ -43,16 +43,13 @@
   };
 </script>
 
-<style scoped>
-  @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-
+<style>
   .cell {
     width: 50px;
     height: 50px;
     line-height: 50px;
     font-size: 25px;
     text-align: center;
-    font-family: "Press Start 2P", cursive;
   }
 
   .default {
@@ -60,15 +57,17 @@
     background-size: contain;
   }
 
-  .flagged {
-    background: url("../assets/images/flagged-cell.svg");
-    background-size: contain;
-  }
-
   .revealed {
     background: url("../assets/images/revealed-cell.svg");
     background-size: contain;
     border: #a6acaf 1px solid;
+  }
+</style>
+
+<style scoped>
+  .flagged {
+    background: url("../assets/images/flagged-cell.svg");
+    background-size: contain;
   }
 
   .losing-bomb {
