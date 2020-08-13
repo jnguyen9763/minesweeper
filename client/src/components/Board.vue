@@ -32,7 +32,6 @@
         moves: 0,
         gameLost: false,
         gameWon: false,
-        revealedTiles: 0,
         totalTiles: this.width * this.height,
       };
     },
@@ -63,14 +62,14 @@
             this.board[x][y].type = TileTypes.LOSING_BOMB;
           }
           this.board[x][y].revealed = true;
-          this.revealedTiles++;
+          this.totalTiles--;
         }
         this.moves++;
-        if (this.totalTiles - this.revealedTiles === this.mines) this.checkWin();
+        if (this.totalTiles === this.mines) this.checkWin();
       },
       clearSurroundingEmptyTiles: function (x, y) {
         this.board[x][y].revealed = true;
-        this.revealedTiles++;
+        this.totalTiles--;
         const neighbors = this.findNeighbors(this.board, x, y);
         for (let cell of neighbors) {
           if (cell.revealed) continue;
@@ -78,7 +77,7 @@
             this.clearSurroundingEmptyTiles(cell.x, cell.y);
           else {
             this.board[cell.x][cell.y].revealed = true;
-            this.revealedTiles++;
+            this.totalTiles--;
           }
         }
       },
@@ -190,8 +189,8 @@
       },
     },
     watch: {
-      revealedTiles: function () {
-        console.log(this.revealedTiles);
+      totalTiles: function () {
+        console.log(this.totalTiles);
       },
     },
   };
