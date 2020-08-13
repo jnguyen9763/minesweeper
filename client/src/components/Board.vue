@@ -24,6 +24,7 @@
     data() {
       return {
         board: this.createBoard(),
+        flagged: [],
         flags: 0,
         moves: 0,
       };
@@ -33,8 +34,15 @@
       flagTile: function (x, y) {
         const flagChange = !this.board[x][y].flagged;
         this.board[x][y].flagged = flagChange;
-        if (flagChange) this.flags++;
-        else this.flags--;
+        if (flagChange) {
+          this.flagged.push(this.board[x][y].type);
+          this.flags++;
+        } else {
+          const index = this.flagged.indexOf(this.board[x][y].type);
+          this.flagged.splice(index, 1);
+          this.flags--;
+        }
+        if (this.flags === this.mines) this.checkWin();
       },
       revealTile: function (x, y) {
         if (this.board[x][y].type === TileTypes.EMPTY) {
@@ -53,6 +61,13 @@
             this.clearSurroundingEmptyTiles(cell.x, cell.y);
           else this.board[cell.x][cell.y].revealed = true;
         }
+      },
+      checkWin: function () {
+        const hasWon = this.flagged.reduce((acc, type) => {
+          if (!acc || type !== TileTypes.BOMB) return false;
+          return true;
+        }, true);
+        if (hasWon) setTimeout(() => alert("You won!"), 100);
       },
       createBoard: function () {
         const board = this.createEmptyBoard();
@@ -97,10 +112,10 @@
           for (let j = 0; j < this.width; j++) {
             if (board[i][j].type !== TileTypes.EMPTY) continue;
             const neighbors = this.findNeighbors(board, i, j);
-            const minesCount = neighbors.reduce((acc, cell) => {
-              if (cell.type === TileTypes.BOMB) return acc + 1;
-              return acc;
-            }, 0);
+            const minesCount = neighbors.reduce(
+              (acc, cell) => (cell.type === TileTypes.BOMB ? acc + 1 : acc),
+              0
+            );
             if (minesCount) board[i][j].type = minesCount;
           }
         }
@@ -125,8 +140,8 @@
       },
     },
     watch: {
-      moves: function () {
-        console.log(this.moves);
+      flagged: function () {
+        console.log(this.flagged);
       },
     },
   };
