@@ -62,6 +62,7 @@
   .revealed {
     background: url("../assets/images/revealed-cell.svg");
     background-size: contain;
+    border: #a6acaf 1px solid;
   }
 
   .cover {
