@@ -29,7 +29,7 @@
         moves: 0,
       };
     },
-    props: ["width", "height", "mines", "gameOver"],
+    props: ["width", "height", "mines"],
     methods: {
       flagTile: function (x, y) {
         const flagChange = !this.board[x][y].flagged;

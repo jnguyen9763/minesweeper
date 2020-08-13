@@ -12,7 +12,6 @@
         width: 10,
         height: 10,
         mines: 10,
-        gameOver: false,
       };
     },
     components: {
