@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ResetButton :face="face" :key="gameState" />
+    <ResetButton :face="face" :resetGame="resetGame" :key="gameState" />
     <Board
       :width="width"
       :height="height"
@@ -8,6 +8,7 @@
       :setGameState="setGameState"
       :onMouseDownHandler="onMouseDownHandler"
       :onMouseUpHandler="onMouseUpHandler"
+      :key="reset"
     />
   </div>
 </template>
@@ -26,6 +27,7 @@
         mines: 10,
         gameState: GameStates.NORMAL,
         face: "🙂",
+        reset: false,
       };
     },
     components: {
@@ -33,6 +35,11 @@
       ResetButton,
     },
     methods: {
+      resetGame: function () {
+        this.reset = !this.reset;
+        this.gameState = GameStates.NORMAL;
+        this.face = "🙂";
+      },
       setGameState: function (gameState) {
         this.gameState = gameState;
         this.face = this.gameState === GameStates.GAME_WON ? "😎" : "😵";

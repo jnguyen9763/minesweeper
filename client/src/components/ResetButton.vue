@@ -4,6 +4,7 @@
     :class="background"
     @mousedown="toggleBackground"
     @mouseup="toggleBackground"
+    @click="resetGame"
   >{{face}}</div>
 </template>
 
@@ -12,14 +13,13 @@
 
   export default {
     name: "ResetButton",
-    props: ["face"],
+    props: ["face", "resetGame"],
     data() {
       return {
         background: "default",
       };
     },
     methods: {
-      resetGame: function () {},
       toggleBackground: function () {
         this.background = this.background === "default" ? "revealed" : "default";
       },
