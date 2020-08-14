@@ -19,6 +19,7 @@
         :key="reset"
       />
     </div>
+    <HighScores />
     <footer class="footer">Made by Jacqueline Nguyen</footer>
   </div>
 </template>
@@ -28,6 +29,7 @@
   import ResetButton from "./ResetButton.vue";
   import FlagTracker from "./FlagTracker.vue";
   import Timer from "./Timer.vue";
+  import HighScores from "./HighScores.vue";
   import GameStates from "../assets/utils/GameStates.js";
 
   export default {
@@ -50,6 +52,7 @@
       ResetButton,
       FlagTracker,
       Timer,
+      HighScores,
     },
     methods: {
       resetGame: function () {
@@ -93,8 +96,8 @@
 
   .header {
     width: 500px;
-    height: 110px;
-    padding: 30px 0;
+    height: 80px;
+    padding-bottom: 30px;
     display: flex;
   }
 
@@ -108,7 +111,7 @@
 
   .board-layout {
     background: url("../assets/images/layout.svg");
-    padding: 0 30px 30px 30px;
+    padding: 30px;
   }
 
   .center {
