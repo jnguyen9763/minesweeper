@@ -102,6 +102,7 @@
         setTimeout(() => {
           alert("You won!");
         }, 100);
+        this.tagBombs("flag");
         // enter high score
       },
       gameOver: function () {
@@ -110,13 +111,17 @@
         setTimeout(() => {
           alert("You lost!");
         }, 100);
+        this.tagBombs("reveal");
+        // show high score screen
+      },
+      tagBombs: function (type) {
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {
             if (this.board[i][j].type !== TileTypes.BOMB) continue;
-            this.board[i][j].revealed = true;
+            if (type === "reveal") this.board[i][j].revealed = true;
+            if (type === "flag") this.board[i][j].flagged = true;
           }
         }
-        // show high score screen
       },
       createBoard: function () {
         const board = this.createEmptyBoard();
