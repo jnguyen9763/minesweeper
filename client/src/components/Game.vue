@@ -1,5 +1,6 @@
 <template>
   <div>
+    <FlagTracker :count="flagCount" />
     <ResetButton :face="face" :resetGame="resetGame" :key="gameState" />
     <Board
       :width="width"
@@ -8,6 +9,7 @@
       :setGameState="setGameState"
       :onMouseDownHandler="onMouseDownHandler"
       :onMouseUpHandler="onMouseUpHandler"
+      :setFlagCount="setFlagCount"
       :key="reset"
     />
   </div>
@@ -16,6 +18,7 @@
 <script>
   import Board from "./Board.vue";
   import ResetButton from "./ResetButton.vue";
+  import FlagTracker from "./FlagTracker.vue";
   import GameStates from "../assets/utils/GameStates.js";
 
   export default {
@@ -25,6 +28,7 @@
         width: 10,
         height: 10,
         mines: 10,
+        flagCount: 10,
         gameState: GameStates.NORMAL,
         face: "🙂",
         reset: false,
@@ -33,12 +37,14 @@
     components: {
       Board,
       ResetButton,
+      FlagTracker,
     },
     methods: {
       resetGame: function () {
         this.reset = !this.reset;
         this.gameState = GameStates.NORMAL;
         this.face = "🙂";
+        this.flagCount = this.mines;
       },
       setGameState: function (gameState) {
         this.gameState = gameState;
@@ -52,6 +58,9 @@
       onMouseUpHandler: function () {
         this.gameState = GameStates.NORMAL;
         this.face = "🙂";
+      },
+      setFlagCount: function (count) {
+        this.flagCount = count;
       },
     },
   };

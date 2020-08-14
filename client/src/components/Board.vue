@@ -42,6 +42,7 @@
       "setGameState",
       "onMouseDownHandler",
       "onMouseUpHandler",
+      "setFlagCount",
     ],
     methods: {
       flagTile: function (x, y) {
@@ -50,6 +51,7 @@
         this.board[x][y].flagged = flagChange;
         if (flagChange) this.flags++;
         else this.flags--;
+        this.setFlagCount(this.mines - this.flags);
         if (this.flags === this.mines) this.checkWin(true);
       },
       revealTile: function (x, y) {
