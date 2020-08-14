@@ -19,6 +19,7 @@
         :key="reset"
       />
     </div>
+    <footer class="footer">Made by Jacqueline Nguyen</footer>
   </div>
 </template>
 
@@ -88,6 +89,8 @@
 </script>
 
 <style scoped>
+  @import url("https://fonts.googleapis.com/css2?family=News+Cycle&display=swap");
+
   .header {
     width: 500px;
     height: 110px;
@@ -115,5 +118,16 @@
     justify-content: center;
     align-items: center;
     background-color: #5dade2;
+  }
+
+  .footer {
+    font-family: "News Cycle", sans-serif;
+    position: absolute;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 0.75rem;
+    background-color: transparent;
+    letter-spacing: 1px;
+    bottom: 0;
   }
 </style>
