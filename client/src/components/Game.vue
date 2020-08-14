@@ -1,20 +1,24 @@
 <template>
-  <div>
-    <FlagTracker :count="flagCount" />
-    <ResetButton :face="face" :resetGame="resetGame" :key="gameState" />
-    <Timer :seconds="seconds" />
-    <Board
-      :width="width"
-      :height="height"
-      :mines="mines"
-      :setGameState="setGameState"
-      :onMouseDownHandler="onMouseDownHandler"
-      :onMouseUpHandler="onMouseUpHandler"
-      :setFlagCount="setFlagCount"
-      :startTimer="startTimer"
-      :stopTimer="stopTimer"
-      :key="reset"
-    />
+  <div class="center">
+    <div class="board-layout">
+      <div class="header">
+        <FlagTracker :count="flagCount" />
+        <ResetButton :face="face" :resetGame="resetGame" :key="gameState" />
+        <Timer :seconds="seconds" />
+      </div>
+      <Board
+        :width="width"
+        :height="height"
+        :mines="mines"
+        :setGameState="setGameState"
+        :onMouseDownHandler="onMouseDownHandler"
+        :onMouseUpHandler="onMouseUpHandler"
+        :setFlagCount="setFlagCount"
+        :startTimer="startTimer"
+        :stopTimer="stopTimer"
+        :key="reset"
+      />
+    </div>
   </div>
 </template>
 
@@ -82,3 +86,34 @@
     },
   };
 </script>
+
+<style scoped>
+  .header {
+    width: 500px;
+    height: 110px;
+    padding: 30px 0;
+    display: flex;
+  }
+
+  .header > div {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .board-layout {
+    background: url("../assets/images/layout.svg");
+    padding: 0 30px 30px 30px;
+  }
+
+  .center {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #5dade2;
+  }
+</style>

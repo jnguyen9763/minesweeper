@@ -1,7 +1,9 @@
 <template>
-  <div class="flagTracker">
-    <div>{{count}}</div>
-    <div class="emoji">🚩</div>
+  <div>
+    <div class="countStyle">
+      <div>{{count}}</div>
+      <div class="emoji">🚩</div>
+    </div>
   </div>
 </template>
 
@@ -12,8 +14,8 @@
   };
 </script>
 
-<style scoped>
-  .flagTracker {
+<style>
+  .countStyle {
     font-size: 35px;
     display: flex;
     align-items: flex-end;

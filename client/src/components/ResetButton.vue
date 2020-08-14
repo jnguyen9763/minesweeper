@@ -1,11 +1,13 @@
 <template>
-  <div
-    class="cell"
-    :class="background"
-    @mousedown="toggleBackground"
-    @mouseup="toggleBackground"
-    @click="resetGame"
-  >{{face}}</div>
+  <div>
+    <div
+      class="cell"
+      :class="background"
+      @mousedown="toggleBackground"
+      @mouseup="toggleBackground"
+      @click="resetGame"
+    >{{face}}</div>
+  </div>
 </template>
 
 <script>

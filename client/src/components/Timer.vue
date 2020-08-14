@@ -1,5 +1,10 @@
 <template>
-  <div class="timer">{{seconds}}</div>
+  <div>
+    <div class="countStyle">
+      <div>{{seconds}}</div>
+      <div class="emoji">🕑</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -8,9 +13,3 @@
     props: ["seconds"],
   };
 </script>
-
-<style scoped>
-  .timer {
-    font-size: 35px;
-  }
-</style>
