@@ -2,6 +2,7 @@
   <div>
     <FlagTracker :count="flagCount" />
     <ResetButton :face="face" :resetGame="resetGame" :key="gameState" />
+    <Timer :seconds="seconds" />
     <Board
       :width="width"
       :height="height"
@@ -10,6 +11,8 @@
       :onMouseDownHandler="onMouseDownHandler"
       :onMouseUpHandler="onMouseUpHandler"
       :setFlagCount="setFlagCount"
+      :startTimer="startTimer"
+      :stopTimer="stopTimer"
       :key="reset"
     />
   </div>
@@ -19,6 +22,7 @@
   import Board from "./Board.vue";
   import ResetButton from "./ResetButton.vue";
   import FlagTracker from "./FlagTracker.vue";
+  import Timer from "./Timer.vue";
   import GameStates from "../assets/utils/GameStates.js";
 
   export default {
@@ -32,12 +36,15 @@
         gameState: GameStates.NORMAL,
         face: "🙂",
         reset: false,
+        seconds: 0,
+        interval: null,
       };
     },
     components: {
       Board,
       ResetButton,
       FlagTracker,
+      Timer,
     },
     methods: {
       resetGame: function () {
@@ -45,6 +52,8 @@
         this.gameState = GameStates.NORMAL;
         this.face = "🙂";
         this.flagCount = this.mines;
+        this.seconds = 0;
+        this.stopTimer();
       },
       setGameState: function (gameState) {
         this.gameState = gameState;
@@ -61,6 +70,14 @@
       },
       setFlagCount: function (count) {
         this.flagCount = count;
+      },
+      startTimer: function () {
+        this.interval = setInterval(() => {
+          this.seconds++;
+        }, 1000);
+      },
+      stopTimer: function () {
+        clearInterval(this.interval);
       },
     },
   };

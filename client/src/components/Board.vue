@@ -10,6 +10,7 @@
         :gameLost="gameLost"
         @mousedown="onMouseDownHandler"
         @mouseup="onMouseUpHandler"
+        @click="onClickHandler"
       />
     </div>
   </div>
@@ -33,6 +34,7 @@
         gameLost: false,
         gameWon: false,
         totalTiles: this.width * this.height,
+        startedTimer: false,
       };
     },
     props: [
@@ -43,8 +45,15 @@
       "onMouseDownHandler",
       "onMouseUpHandler",
       "setFlagCount",
+      "startTimer",
+      "stopTimer",
     ],
     methods: {
+      onClickHandler: function () {
+        if (this.startedTimer) return;
+        this.startTimer();
+        this.startedTimer = true;
+      },
       flagTile: function (x, y) {
         if (this.gameLost || this.gameWon) return;
         const flagChange = !this.board[x][y].flagged;
@@ -105,6 +114,7 @@
           alert("You won!");
         }, 100);
         this.tagBombs("flag");
+        this.stopTimer();
         // enter high score
       },
       gameOver: function () {
@@ -114,6 +124,7 @@
           alert("You lost!");
         }, 100);
         this.tagBombs("reveal");
+        this.stopTimer();
         // show high score screen
       },
       tagBombs: function (type) {
@@ -193,11 +204,6 @@
         if (!isRightEdge && !isBottomEdge) neighbors.push(board[x + 1][y + 1]);
 
         return neighbors;
-      },
-    },
-    watch: {
-      totalTiles: function () {
-        console.log(this.totalTiles);
       },
     },
   };
