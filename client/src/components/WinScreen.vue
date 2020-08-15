@@ -25,7 +25,7 @@
 
   export default {
     name: "WinScreen",
-    props: ["seconds"],
+    props: ["seconds", "closeWinScreenAndShowHighScores"],
     data() {
       return {
         name: "",
@@ -40,6 +40,7 @@
             highscore: this.seconds,
           })
           .then(() => {
+            this.closeWinScreenAndShowHighScores();
             this.name = "";
           });
       },
@@ -57,7 +58,6 @@
     width: 560px;
     height: 640px;
     background: url("../assets/images/win-screen.svg");
-    position: absolute;
     padding: 15px 30px;
     text-align: center;
   }

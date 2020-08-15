@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <div class="board-layout">
+    <div class="board-layout margin">
       <div class="header">
         <FlagTracker :count="flagCount" />
         <ResetButton :face="face" :resetGame="resetGame" :key="gameState" />
@@ -19,8 +19,13 @@
         :key="reset"
       />
     </div>
-    <!-- <HighScores /> -->
-    <WinScreen :seconds="seconds" />
+    <HighScores v-if="showHighScores" class="margin" />
+    <WinScreen
+      class="margin"
+      v-if="showWinScreen"
+      :seconds="seconds"
+      :closeWinScreenAndShowHighScores="closeWinScreenAndShowHighScores"
+    />
     <footer class="footer">Made by Jacqueline Nguyen</footer>
   </div>
 </template>
@@ -47,6 +52,8 @@
         reset: false,
         seconds: 0,
         interval: null,
+        showHighScores: false,
+        showWinScreen: false,
       };
     },
     components: {
@@ -64,11 +71,19 @@
         this.face = "🙂";
         this.flagCount = this.mines;
         this.seconds = 0;
+        this.showHighScores = false;
+        this.showWinScreen = false;
         this.stopTimer();
       },
       setGameState: function (gameState) {
         this.gameState = gameState;
         this.face = this.gameState === GameStates.GAME_WON ? "😎" : "😵";
+        if (this.gameState === GameStates.GAME_LOST) this.showHighScores = true;
+        if (this.gameState === GameStates.GAME_WON) this.showWinScreen = true;
+      },
+      closeWinScreenAndShowHighScores: function () {
+        this.showWinScreen = false;
+        this.showHighScores = true;
       },
       onMouseDownHandler: function (evt) {
         if (evt.which === 3) return;
@@ -135,5 +150,9 @@
     background-color: transparent;
     letter-spacing: 1px;
     bottom: 0;
+  }
+
+  .margin {
+    margin: 0 0.5rem;
   }
 </style>

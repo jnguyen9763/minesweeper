@@ -75,7 +75,8 @@
           this.totalTiles--;
         }
         this.moves++;
-        if (this.totalTiles === this.mines) this.checkWin();
+        if (this.totalTiles === this.mines && this.flags <= this.mines)
+          this.checkWin();
       },
       clearSurroundingEmptyTiles: function (x, y) {
         this.board[x][y].revealed = true;
@@ -103,25 +104,18 @@
             }
           }
         }
-        if (!unrevealedBombs) this.winGame();
+        if (unrevealedBombs === 0) this.winGame();
       },
       winGame: function () {
         this.gameWon = true;
         this.setGameState(GameStates.GAME_WON);
-        setTimeout(() => {
-          alert("You won!");
-        }, 100);
         this.tagBombs("flag");
         this.stopTimer();
         this.setFlagCount(0);
-        // enter high score
       },
       gameOver: function () {
         this.gameLost = true;
         this.setGameState(GameStates.GAME_LOST);
-        setTimeout(() => {
-          alert("You lost!");
-        }, 100);
         this.tagBombs("reveal");
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {
@@ -132,7 +126,6 @@
           }
         }
         this.stopTimer();
-        // show high score screen
       },
       tagBombs: function (type) {
         for (let i = 0; i < this.height; i++) {

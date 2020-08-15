@@ -67,7 +67,6 @@
     width: 560px;
     height: 640px;
     background: url("../assets/images/highscores-panel.svg");
-    position: absolute;
     padding: 30px;
   }
 
