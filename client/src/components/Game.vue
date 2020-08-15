@@ -19,7 +19,7 @@
         :key="reset"
       />
     </div>
-    <HighScores />
+    <!-- <HighScores /> -->
     <footer class="footer">Made by Jacqueline Nguyen</footer>
   </div>
 </template>

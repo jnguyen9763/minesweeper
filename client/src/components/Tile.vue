@@ -1,7 +1,11 @@
 <template>
   <div class="cell default" @click="onLeftClickHandler" @contextmenu.prevent="onRightClickHandler">
-    <div v-if="(!gameLost && isFlagged) || (gameLost && isFlagged && !isBomb)" class="flagged">🚩</div>
-    <div v-if="isRevealed" class="revealed cover">
+    <div v-if="isWrong" class="flagged">❌</div>
+    <div
+      v-else-if="(!gameLost && isFlagged) || (gameLost && isFlagged && !isBomb)"
+      class="flagged"
+    >🚩</div>
+    <div v-else-if="isRevealed" class="revealed cover">
       <div v-if="isBomb || isLosingBomb" :class="{'losing-bomb': isLosingBomb}">💣</div>
       <div v-else-if="!isEmpty" class="text" :style="{color: textColor}">{{cell.type}}</div>
     </div>
@@ -20,6 +24,7 @@
         isBomb: this.cell.type === TileTypes.BOMB,
         isLosingBomb: this.cell.type === TileTypes.LOSING_BOMB,
         isEmpty: this.cell.type === TileTypes.EMPTY,
+        isWrong: this.cell.type === TileTypes.WRONG,
         isFlagged: this.cell.flagged,
         isRevealed: this.cell.revealed,
         textColor:

@@ -61,7 +61,6 @@
         if (flagChange) this.flags++;
         else this.flags--;
         this.setFlagCount(this.mines - this.flags);
-        if (this.flags === this.mines) this.checkWin(true);
       },
       revealTile: function (x, y) {
         if (this.gameLost || this.gameWon) return;
@@ -92,14 +91,13 @@
           }
         }
       },
-      checkWin: function (flagged = false) {
+      checkWin: function () {
         let unrevealedBombs = this.mines;
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {
             if (
               this.board[i][j].type === TileTypes.BOMB &&
-              !this.board[i][j].revealed &&
-              (!flagged || (flagged && this.board[i][j].flagged))
+              !this.board[i][j].revealed
             ) {
               unrevealedBombs--;
             }
@@ -125,6 +123,14 @@
           alert("You lost!");
         }, 100);
         this.tagBombs("reveal");
+        for (let i = 0; i < this.height; i++) {
+          for (let j = 0; j < this.width; j++) {
+            if (this.board[i][j].flagged) {
+              this.board[i][j].type = TileTypes.WRONG;
+              this.board[i][j].flagged = false;
+            }
+          }
+        }
         this.stopTimer();
         // show high score screen
       },
