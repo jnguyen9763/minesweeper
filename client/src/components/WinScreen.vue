@@ -45,11 +45,6 @@
           });
       },
     },
-    watch: {
-      name: function () {
-        console.log(this.name);
-      },
-    },
   };
 </script>
 
