@@ -86,11 +86,12 @@
         this.showHighScores = true;
       },
       onMouseDownHandler: function (evt) {
-        if (evt.which === 3) return;
+        if (evt.which === 3 || this.gameState !== GameStates.NORMAL) return;
         this.gameState = GameStates.PICKED_TILE;
         this.face = "😮";
       },
       onMouseUpHandler: function () {
+        if (this.gameState !== GameStates.PICKED_TILE) return;
         this.gameState = GameStates.NORMAL;
         this.face = "🙂";
       },
