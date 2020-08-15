@@ -115,6 +115,7 @@
         }, 100);
         this.tagBombs("flag");
         this.stopTimer();
+        this.setFlagCount(0);
         // enter high score
       },
       gameOver: function () {
