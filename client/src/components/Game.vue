@@ -20,6 +20,7 @@
       />
     </div>
     <!-- <HighScores /> -->
+    <WinScreen :seconds="seconds" />
     <footer class="footer">Made by Jacqueline Nguyen</footer>
   </div>
 </template>
@@ -30,6 +31,7 @@
   import FlagTracker from "./FlagTracker.vue";
   import Timer from "./Timer.vue";
   import HighScores from "./HighScores.vue";
+  import WinScreen from "./WinScreen.vue";
   import GameStates from "../assets/utils/GameStates.js";
 
   export default {
@@ -53,6 +55,7 @@
       FlagTracker,
       Timer,
       HighScores,
+      WinScreen,
     },
     methods: {
       resetGame: function () {
