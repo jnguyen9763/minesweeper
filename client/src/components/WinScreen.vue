@@ -35,7 +35,7 @@
     methods: {
       onSubmitHandler: function () {
         axios
-          .post("http://localhost:5000/highscores", {
+          .post("/highscores", {
             name: this.name,
             highscore: this.seconds,
           })

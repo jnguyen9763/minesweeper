@@ -35,7 +35,7 @@
     },
     mounted() {
       axios
-        .get("http://localhost:5000/highscores")
+        .get("/highscores")
         .then((response) => (this.highscores = response.data));
     },
     watch: {
