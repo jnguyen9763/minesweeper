@@ -7,7 +7,7 @@
     >🚩</div>
     <div v-else-if="isRevealed" class="revealed cover">
       <div v-if="isBomb || isLosingBomb" :class="{'losing-bomb': isLosingBomb}">💣</div>
-      <div v-else-if="!isEmpty" class="text" :style="{color: textColor}">{{cell.type}}</div>
+      <div v-else-if="!isEmpty" :style="{color: textColor}">{{cell.type}}</div>
     </div>
   </div>
 </template>
@@ -50,10 +50,10 @@
 
 <style>
   .cell {
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    font-size: 25px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
     text-align: center;
   }
 
@@ -82,9 +82,5 @@
   .cover {
     width: 100%;
     height: 100%;
-  }
-
-  .text {
-    font-size: 20px;
   }
 </style>

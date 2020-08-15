@@ -209,8 +209,8 @@
 
 <style scoped>
   .board {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     display: flex;
     flex-wrap: wrap;
   }

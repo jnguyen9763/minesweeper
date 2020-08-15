@@ -2,15 +2,15 @@
   <div class="win-screen">
     <h1>You won!</h1>
     <div class="emoji">⭐</div>
-    <h2>
+    <h3>
       You only took {{seconds}}
       <span v-if="single">second</span>
       <span v-else>seconds</span> to complete the game.
-    </h2>
+    </h3>
     <hr />
     <form @submit.prevent="onSubmitHandler">
       <label for="name">
-        <h2>Enter your name to save your highscore</h2>
+        <h3>Enter your name to save your highscore</h3>
       </label>
       <br />
       <input type="text" id="name" name="name" v-model="name" required />
@@ -50,15 +50,16 @@
 
 <style scoped>
   .win-screen {
-    width: 560px;
-    height: 640px;
+    width: 448px;
+    height: 512px;
     background: url("../assets/images/win-screen.svg");
-    padding: 15px 30px;
+    background-size: contain;
+    padding: 12px 24px;
     text-align: center;
   }
 
   .win-screen > * {
-    margin: 2rem 0;
+    margin: 1.25rem 0;
   }
 
   form > * {
@@ -67,13 +68,13 @@
   }
 
   .emoji {
-    font-size: 100px;
+    font-size: 80px;
   }
 
   #name {
     width: 75%;
     line-height: 2rem;
-    font-size: 1.5rem;
+    font-size: 1.15rem;
     text-align: center;
     padding: 0.25rem;
     background-color: #e5e7e9;
@@ -81,7 +82,7 @@
   }
 
   #submit {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
     background-color: #cacfd2;
     border: 3px #000000 solid;
     padding: 0.5rem 1rem;

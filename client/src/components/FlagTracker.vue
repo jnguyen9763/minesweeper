@@ -16,12 +16,12 @@
 
 <style>
   .countStyle {
-    font-size: 35px;
+    font-size: 25px;
     display: flex;
     align-items: flex-end;
   }
 
   .emoji {
-    font-size: 30px;
+    font-size: 20px;
   }
 </style>

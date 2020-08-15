@@ -64,32 +64,35 @@
   }
 
   .highscores {
-    width: 560px;
-    height: 640px;
+    width: 448px;
+    height: 512px;
     background: url("../assets/images/highscores-panel.svg");
-    padding: 30px;
+    background-size: contain;
+    padding: 24px;
   }
 
   .header {
-    height: 80px;
-    padding-bottom: 30px;
-    line-height: 50px;
-    font-size: 45px;
+    width: 400px;
+    height: 64px;
+    padding-bottom: 24px;
+    line-height: 40px;
+    font-size: 36px;
     text-align: center;
   }
 
   .table {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
   }
 
   .table-header {
-    height: 50px;
+    height: 40px;
     padding: 0.5rem 0;
+    font-weight: bold;
   }
 
   .table-body {
-    height: 450px;
+    height: 360px;
     overflow-y: scroll;
   }
 

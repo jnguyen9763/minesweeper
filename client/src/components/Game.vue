@@ -113,9 +113,9 @@
   @import url("https://fonts.googleapis.com/css2?family=News+Cycle&display=swap");
 
   .header {
-    width: 500px;
-    height: 80px;
-    padding-bottom: 30px;
+    width: 400px;
+    height: 64px;
+    padding-bottom: 24px;
     display: flex;
   }
 
@@ -129,7 +129,8 @@
 
   .board-layout {
     background: url("../assets/images/layout.svg");
-    padding: 30px;
+    background-size: contain;
+    padding: 24px;
   }
 
   .center {
