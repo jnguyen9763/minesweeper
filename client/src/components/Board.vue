@@ -117,19 +117,17 @@
         this.gameLost = true;
         this.setGameState(GameStates.GAME_LOST);
         this.tagBombs("reveal");
-        for (let i = 0; i < this.height; i++) {
-          for (let j = 0; j < this.width; j++) {
-            if (this.board[i][j].flagged) {
-              this.board[i][j].type = TileTypes.WRONG;
-              this.board[i][j].flagged = false;
-            }
-          }
-        }
         this.stopTimer();
       },
       tagBombs: function (type) {
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {
+            if (
+              type === "reveal" &&
+              this.board[i][j].flagged &&
+              this.board[i][j].type !== TileTypes.BOMB
+            )
+              this.board[i][j].type = TileTypes.WRONG;
             if (this.board[i][j].type !== TileTypes.BOMB) continue;
             if (type === "reveal") this.board[i][j].revealed = true;
             if (type === "flag") this.board[i][j].flagged = true;
